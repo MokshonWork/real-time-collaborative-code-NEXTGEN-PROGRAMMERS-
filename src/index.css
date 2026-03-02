@@ -1,0 +1,442 @@
+@import "tailwindcss";
+
+/* ===== ALWAYS-VISIBLE REMOTE CURSOR NAME TAGS ===== */
+/* y-monaco creates per-user classes like yRemoteSelectionHead-{clientId} */
+/* This ensures ALL remote cursor name labels are ALWAYS visible */
+
+.yRemoteSelection {
+  background-color: rgba(255, 200, 0, 0.2) !important;
+}
+
+.yRemoteSelectionHead {
+  position: absolute !important;
+  border-left: 2px solid !important;
+  height: 100% !important;
+  box-sizing: border-box !important;
+  z-index: 1000 !important;
+}
+
+/* Always-on name label above each remote cursor */
+.yRemoteSelectionHead::after {
+  position: absolute !important;
+  font-size: 11px !important;
+  padding: 2px 8px !important;
+  border-radius: 3px 3px 3px 0 !important;
+  top: -20px !important;
+  left: -2px !important;
+  white-space: nowrap !important;
+  color: white !important;
+  font-weight: 700 !important;
+  pointer-events: none !important;
+  z-index: 10000 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+  letter-spacing: 0.02em !important;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5) !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4) !important;
+  line-height: 1.4 !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  animation: cursorLabelPulse 3s ease-in-out infinite !important;
+}
+
+@keyframes cursorLabelPulse {
+  0%, 100% { opacity: 1; transform: translateY(0); }
+  50% { opacity: 0.85; transform: translateY(-1px); }
+}
+
+/* Make cursor line glow when user is actively typing */
+@keyframes cursorGlow {
+  0%, 100% { box-shadow: 0 0 4px currentColor; }
+  50% { box-shadow: 0 0 12px currentColor; }
+}
+
+/* ===== CUSTOM SCROLLBAR ===== */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1e1e1e;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #424242;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* ===== MONACO EDITOR OVERRIDES ===== */
+.monaco-editor .margin {
+  background-color: #1e1e1e !important;
+}
+
+/* Ensure cursor labels aren't clipped */
+.monaco-editor .view-overlays {
+  overflow: visible !important;
+}
+
+.monaco-editor .view-overlays > div {
+  overflow: visible !important;
+}
+
+/* ===== SMOOTH TRANSITIONS ===== */
+button, a {
+  transition: background-color 150ms ease, color 150ms ease, transform 150ms ease, opacity 150ms ease;
+}
+
+.select-none {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.25s ease;
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(10px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.animate-slideIn {
+  animation: slideInRight 0.2s ease;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* ===== TYPING INDICATOR PULSE ===== */
+@keyframes typingPulse {
+  0%, 100% { 
+    box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.4);
+  }
+  50% { 
+    box-shadow: 0 0 0 4px rgba(76, 175, 80, 0);
+  }
+}
+
+.typing-pulse {
+  animation: typingPulse 1.5s ease-in-out infinite;
+}
+
+/* ===== ACTIVITY LOG ENTRY ===== */
+.activity-entry {
+  border-left: 2px solid transparent;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.activity-entry:hover {
+  border-left-color: #007acc;
+  background-color: #2a2d2e;
+}
+
+/* ===== RESIZABLE PANELS ===== */
+.resize-handle-v {
+  cursor: row-resize;
+  transition: background-color 0.15s ease;
+}
+
+.resize-handle-v:hover {
+  background-color: #007acc !important;
+}
+
+.resize-handle-h {
+  cursor: col-resize;
+  transition: background-color 0.15s ease;
+}
+
+.resize-handle-h:hover {
+  background-color: #007acc !important;
+}
+
+/* ===== VOICE CHAT STYLES ===== */
+.voice-chat {
+  display: flex;
+  align-items: center;
+}
+
+.voice-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.voice-join-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  background: #2ea043;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.voice-join-btn:hover {
+  background: #3fb950;
+}
+
+.voice-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.voice-avatar {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #2d2d2d;
+  border: 2px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.voice-avatar.speaking {
+  animation: voicePulse 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes voicePulse {
+  from { transform: scale(1); box-shadow: 0 0 0 0 rgba(46, 160, 67, 0.4); }
+  to { transform: scale(1.05); box-shadow: 0 0 0 4px rgba(46, 160, 67, 0); }
+}
+
+.speaking-indicator {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 8px;
+  height: 8px;
+  background: #2ea043;
+  border-radius: 50%;
+  border: 2px solid #1e1e1e;
+}
+
+.voice-name {
+  font-size: 11px;
+  color: #ccc;
+}
+
+.muted-badge {
+  color: #f85149;
+}
+
+.voice-buttons {
+  display: flex;
+  gap: 4px;
+}
+
+.voice-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: #3c3c3c;
+  border: none;
+  border-radius: 4px;
+  color: #ccc;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.voice-btn:hover {
+  background: #4c4c4c;
+  color: white;
+}
+
+.voice-btn.active {
+  background: #f85149;
+  color: white;
+}
+
+.voice-btn.leave {
+  background: transparent;
+}
+
+.voice-btn.leave:hover {
+  background: #f8514920;
+  color: #f85149;
+}
+
+.voice-participants {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: #888;
+  padding-left: 8px;
+  border-left: 1px solid #3c3c3c;
+  margin-left: 4px;
+}
+
+.voice-error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  background: #f8514920;
+  border: 1px solid #f85149;
+  border-radius: 4px;
+  color: #f85149;
+  font-size: 12px;
+  margin-right: 8px;
+}
+
+.voice-error button {
+  background: none;
+  border: none;
+  color: #f85149;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.voice-remote-users {
+  display: flex;
+  gap: 4px;
+  margin-left: 8px;
+  padding-left: 8px;
+  border-left: 1px solid #3c3c3c;
+}
+
+.remote-user {
+  position: relative;
+}
+
+.remote-avatar {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #2d2d2d;
+  border: 2px solid #888;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 600;
+  color: white;
+}
+
+.remote-user.speaking .remote-avatar {
+  animation: voicePulse 0.5s ease-in-out infinite alternate;
+}
+
+.muted-icon {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  background: #1e1e1e;
+  border-radius: 50%;
+  padding: 1px;
+  color: #f85149;
+}
+
+.speaking-ring {
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border: 2px solid;
+  border-radius: 50%;
+  animation: speakingRing 1s ease-out infinite;
+}
+
+@keyframes speakingRing {
+  from { transform: scale(1); opacity: 0.8; }
+  to { transform: scale(1.3); opacity: 0; }
+}
+
+/* ===== COLLABORATIVE EDITOR STYLES ===== */
+.collaborative-editor {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.monaco-container {
+  width: 100%;
+  height: 100%;
+}
+
+.typing-overlay {
+  position: absolute;
+  top: 8px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.typing-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 12px;
+  color: white;
+  font-size: 11px;
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  animation: typingBadgeSlide 0.3s ease;
+}
+
+@keyframes typingBadgeSlide {
+  from { opacity: 0; transform: translateX(10px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.typing-name {
+  font-weight: 600;
+}
+
+.typing-text {
+  opacity: 0.9;
+}
+
+.typing-dots-inline {
+  display: inline-flex;
+  gap: 1px;
+}
+
+.typing-dots-inline span {
+  animation: typingDotBounce 1.4s infinite;
+  font-weight: bold;
+}
+
+.typing-dots-inline span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing-dots-inline span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes typingDotBounce {
+  0%, 60%, 100% { opacity: 0.3; }
+  30% { opacity: 1; }
+}
